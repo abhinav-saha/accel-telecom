@@ -1,0 +1,13 @@
+{
+  "name": "accel-telecom",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "postinstall": "npm --prefix FRONTEND install",
+    "dev": "npm --prefix FRONTEND run dev -- --host 0.0.0.0",
+    "build": "npm --prefix FRONTEND run build",
+    "preview": "npm --prefix FRONTEND run preview -- --host 0.0.0.0",
+    "lint": "npm --prefix FRONTEND run lint"
+  }
+}

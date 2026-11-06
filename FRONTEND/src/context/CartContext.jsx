@@ -46,10 +46,21 @@ function CartProvider({ children }) {
             clearTimeout(toastTimer.current);
         }
 
+<<<<<<< HEAD
         toastTimer.current = setTimeout(() => {
             setToast(null);
         }, 2800);
     }, []);
+=======
+  const removeFromCart = useCallback(
+    (productId) => {
+      const removed = items.find((item) => item.product_id === productId);
+      setItems((prev) => prev.filter((item) => item.product_id !== productId));
+      if (removed) showToast(`${removed.product_name} removed from cart`);
+    },
+    [items, showToast],
+  );
+>>>>>>> a2df8c4258118dad89e34666457af3bf76c8d31f
 
     // Fetch cart when application starts
     useEffect(() => {
@@ -173,11 +184,32 @@ function CartProvider({ children }) {
         dismissToast: () => setToast(null)
     };
 
+<<<<<<< HEAD
     return (
         <CartContext.Provider value={value}>
             {children}
         </CartContext.Provider>
     );
+=======
+  const cartTotal = items.reduce(
+    (total, item) => total + item.price_min_inr_per_month * item.quantity,
+    0,
+  );
+
+  const value = {
+    items,
+    itemCount,
+    cartTotal,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    toast,
+    dismissToast: () => setToast(null),
+  };
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+>>>>>>> a2df8c4258118dad89e34666457af3bf76c8d31f
 }
 
 function useCart() {
