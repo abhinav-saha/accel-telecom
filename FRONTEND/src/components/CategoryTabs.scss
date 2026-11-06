@@ -1,0 +1,58 @@
+@use '../styles/mixins' as *;
+@use '../styles/variables' as *;
+
+.category-tabs {
+  &__scroll {
+    display: flex;
+    gap: $space-1;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-border;
+      border-radius: $radius-pill;
+    }
+  }
+
+  &__tab {
+    @include button-reset;
+    flex-shrink: 0;
+    padding: 8px $space-2;
+    font-size: 0.88rem;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+    background-color: $color-white;
+    border: 1px solid $color-border;
+    border-radius: $radius-pill;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: $color-primary-red;
+      color: $color-primary-red;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary-red;
+      outline-offset: 2px;
+    }
+
+    &--active {
+      background-color: $color-primary-red;
+      border-color: $color-primary-red;
+      color: $color-white;
+
+      &:hover {
+        background-color: $color-dark-red;
+        border-color: $color-dark-red;
+        color: $color-white;
+      }
+    }
+  }
+}

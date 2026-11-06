@@ -1,0 +1,68 @@
+@use '../styles/mixins' as *;
+@use '../styles/variables' as *;
+
+.toast {
+  position: fixed;
+  bottom: $space-3;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+  padding: $space-1 $space-2;
+  background-color: $color-text-primary;
+  color: $color-white;
+  border-radius: $radius-pill;
+  box-shadow: $shadow-lg;
+  animation: toast-in 0.25s ease;
+  max-width: calc(100% - #{$space-4});
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-success;
+    flex-shrink: 0;
+  }
+
+  &__message {
+    font-size: 0.9rem;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__close {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: rgba($color-white, 0.7);
+    padding: 2px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &:hover {
+      color: $color-white;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-white;
+      outline-offset: 1px;
+    }
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

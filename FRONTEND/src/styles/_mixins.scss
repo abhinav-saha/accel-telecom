@@ -1,0 +1,105 @@
+@use 'variables' as *;
+
+@mixin tablet-up {
+  @media (min-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: $bp-desktop) {
+    @content;
+  }
+}
+
+@mixin wide-up {
+  @media (min-width: $bp-wide) {
+    @content;
+  }
+}
+
+@mixin container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding-left: $container-padding;
+  padding-right: $container-padding;
+}
+
+@mixin button-reset {
+  font-family: inherit;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@mixin primary-button {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+  padding: $space-1 $space-3;
+  background-color: $color-primary-red;
+  color: $color-white;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-pill;
+  text-decoration: none;
+
+  &:hover {
+    background-color: $color-dark-red;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary-red;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background-color: lighten($color-primary-red, 25%);
+    cursor: not-allowed;
+  }
+}
+
+@mixin secondary-button {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-1;
+  padding: $space-1 $space-3;
+  background-color: $color-white;
+  color: $color-primary-red;
+  border: 1px solid $color-primary-red;
+  font-weight: $font-weight-semibold;
+  border-radius: $radius-pill;
+  text-decoration: none;
+
+  &:hover {
+    background-color: $color-light-red;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-primary-red;
+    outline-offset: 2px;
+  }
+}
+
+@mixin card-surface {
+  background-color: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+
+@mixin section-spacing {
+  padding-top: $space-6;
+  padding-bottom: $space-6;
+
+  @include desktop-up {
+    padding-top: $space-7;
+    padding-bottom: $space-7;
+  }
+}

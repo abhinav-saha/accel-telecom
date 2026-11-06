@@ -1,0 +1,83 @@
+@use '../styles/mixins' as *;
+@use '../styles/variables' as *;
+
+.product-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: $space-2;
+  padding: $space-2;
+  background-color: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 140px;
+  }
+
+  &__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-weight: $font-weight-medium;
+    color: $color-text-secondary;
+    white-space: nowrap;
+  }
+
+  &__select {
+    font-size: 0.88rem;
+    color: $color-text-primary;
+    background-color: $color-background;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    padding: 8px 10px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23707070' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary-red;
+      box-shadow: 0 0 0 3px rgba($color-primary-red, 0.1);
+    }
+  }
+
+  &__range {
+    width: 100%;
+    accent-color: $color-primary-red;
+    cursor: pointer;
+  }
+
+  &__reset {
+    @include button-reset;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px $space-2;
+    font-size: 0.85rem;
+    font-weight: $font-weight-semibold;
+    color: $color-primary-red;
+    background-color: $color-white;
+    border: 1px solid $color-primary-red;
+    border-radius: $radius-md;
+    flex-shrink: 0;
+
+    &:hover {
+      background-color: $color-light-red;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary-red;
+      outline-offset: 2px;
+    }
+  }
+}

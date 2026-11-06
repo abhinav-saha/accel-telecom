@@ -1,0 +1,24 @@
+@use 'variables' as *;
+
+body {
+  font-family: $font-family-base;
+  font-weight: $font-weight-regular;
+  color: $color-text-primary;
+  background-color: $color-background;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+:focus-visible {
+  outline: 2px solid $color-primary-red;
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: $color-light-red;
+  color: $color-dark-red;
+}

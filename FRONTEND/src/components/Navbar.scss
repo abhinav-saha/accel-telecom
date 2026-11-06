@@ -1,0 +1,216 @@
+@use '../styles/mixins' as *;
+@use '../styles/variables' as *;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: $color-white;
+  border-bottom: 1px solid $color-border;
+  box-shadow: $shadow-xs;
+
+  &__inner {
+    @include container;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $space-2;
+    height: $navbar-height;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex-shrink: 0;
+  }
+
+  &__logo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: $color-primary-red;
+    color: $color-white;
+    border-radius: $radius-md;
+  }
+
+  &__brand-name {
+    font-size: 1.15rem;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    letter-spacing: -0.01em;
+  }
+
+  &__nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__tabs {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+  }
+
+  &__tab-item {
+    display: flex;
+  }
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: $space-1 $space-2;
+    font-size: 0.95rem;
+    font-weight: $font-weight-medium;
+    color: $color-text-secondary;
+    border-radius: $radius-pill;
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+      color: $color-primary-red;
+      background-color: $color-light-red;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary-red;
+      outline-offset: 2px;
+    }
+
+    &.active {
+      color: $color-primary-red;
+      font-weight: $font-weight-semibold;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -22px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 32px;
+        height: 3px;
+        background-color: $color-primary-red;
+        border-radius: $radius-pill;
+      }
+    }
+  }
+
+  &__tab-icon {
+    flex-shrink: 0;
+  }
+
+  &__tab-label {
+    @include tablet-up {
+      display: inline;
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    flex-shrink: 0;
+  }
+
+  &__cart {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: $color-text-secondary;
+    border-radius: 50%;
+    transition: color 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+      color: $color-primary-red;
+      background-color: $color-light-red;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary-red;
+      outline-offset: 2px;
+    }
+
+    &.active {
+      color: $color-primary-red;
+    }
+  }
+
+  &__cart-badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    font-size: 0.68rem;
+    font-weight: $font-weight-semibold;
+    color: $color-white;
+    background-color: $color-primary-red;
+    border-radius: $radius-pill;
+    border: 2px solid $color-white;
+  }
+
+  &__profile {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: $color-light-red;
+    color: $color-primary-red;
+    border: 1px solid $color-border;
+    border-radius: 50%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: $color-primary-red;
+      box-shadow: $shadow-sm;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $color-primary-red;
+      outline-offset: 2px;
+    }
+  }
+
+  &__avatar {
+    font-size: 0.8rem;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.02em;
+  }
+
+  &__profile-icon {
+    display: none;
+  }
+
+  @media (max-width: calc($bp-tablet - 1px)) {
+  &__brand-name {
+    display: none;
+  }
+}
+
+    &__tab-label {
+      display: none;
+    }
+
+    &__tab {
+      padding: $space-1;
+
+      &.active::after {
+        bottom: -18px;
+        width: 24px;
+      }
+    }
+  }
+

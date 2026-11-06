@@ -1,0 +1,202 @@
+@use 'sass:color';
+@use '../styles/mixins' as *;
+@use '../styles/variables' as *;
+
+.product-card {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  padding: $space-3;
+  height: 100%;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+    border-color: color.adjust($color-border, $lightness: -6%);
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    gap: $space-1;
+    margin-bottom: $space-1;
+  }
+
+  &__category-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: $color-light-red;
+    color: $color-primary-red;
+    border-radius: $radius-sm;
+    flex-shrink: 0;
+  }
+
+  &__category {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $color-primary-red;
+    background-color: $color-light-red;
+    padding: 4px 10px;
+    border-radius: $radius-pill;
+  }
+
+  &__name {
+    font-size: 1.1rem;
+    font-weight: $font-weight-semibold;
+    margin-bottom: $space-1;
+    color: $color-text-primary;
+  }
+
+  &__description {
+    font-size: 0.88rem;
+    color: $color-text-secondary;
+    line-height: 1.5;
+    margin-bottom: $space-2;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__pricing {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: $space-1;
+    padding-bottom: $space-2;
+    border-bottom: 1px solid $color-border;
+    margin-bottom: $space-2;
+  }
+
+  &__price-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__price-label {
+    font-size: 0.72rem;
+    color: $color-text-secondary;
+    margin-bottom: 2px;
+  }
+
+  &__price-value {
+    font-size: 1.15rem;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+
+  &__price-unit {
+    font-size: 0.75rem;
+    font-weight: $font-weight-regular;
+    color: $color-text-secondary;
+    margin-left: 2px;
+  }
+
+  &__billing-unit {
+    font-size: 0.78rem;
+    color: $color-text-secondary;
+    text-align: right;
+  }
+
+  &__meta {
+    display: flex;
+    gap: $space-2;
+    margin-bottom: $space-2;
+  }
+
+  &__meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+  }
+
+  &__meta-label {
+    font-size: 0.7rem;
+    color: $color-text-secondary;
+  }
+
+  &__meta-value {
+    font-size: 0.85rem;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
+
+    &--success {
+      color: $color-success;
+    }
+  }
+
+  &__segments {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: $space-2;
+    color: $color-text-secondary;
+  }
+
+  &__segment-tag {
+    font-size: 0.7rem;
+    font-weight: $font-weight-medium;
+    color: $color-text-secondary;
+    background-color: $color-background;
+    padding: 3px 8px;
+    border-radius: $radius-pill;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $space-1;
+    margin-top: auto;
+  }
+
+  &__action {
+    @include button-reset;
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px $space-1;
+    font-size: 0.85rem;
+    font-weight: $font-weight-semibold;
+    border-radius: $radius-md;
+
+    &--primary {
+      background-color: $color-primary-red;
+      color: $color-white;
+
+      &:hover {
+        background-color: $color-dark-red;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $color-primary-red;
+        outline-offset: 2px;
+      }
+    }
+
+    &--secondary {
+      background-color: $color-white;
+      color: $color-text-primary;
+      border: 1px solid $color-border;
+
+      &:hover {
+        border-color: $color-primary-red;
+        color: $color-primary-red;
+      }
+
+      &:focus-visible {
+        outline: 2px solid $color-primary-red;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
