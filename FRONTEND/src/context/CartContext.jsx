@@ -61,9 +61,14 @@ function CartProvider({ children }) {
     [showToast],
   );
 
-  const removeFromCart = useCallback((productId) => {
-    setItems((prev) => prev.filter((item) => item.product_id !== productId));
-  }, []);
+  const removeFromCart = useCallback(
+    (productId) => {
+      const removed = items.find((item) => item.product_id === productId);
+      setItems((prev) => prev.filter((item) => item.product_id !== productId));
+      if (removed) showToast(`${removed.product_name} removed from cart`);
+    },
+    [items, showToast],
+  );
 
   const updateQuantity = useCallback((productId, quantity) => {
     setItems((prev) =>
@@ -79,9 +84,15 @@ function CartProvider({ children }) {
 
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
 
+  const cartTotal = items.reduce(
+    (total, item) => total + item.price_min_inr_per_month * item.quantity,
+    0,
+  );
+
   const value = {
     items,
     itemCount,
+    cartTotal,
     addToCart,
     removeFromCart,
     updateQuantity,

@@ -1,0 +1,103 @@
+@use '../styles/mixins' as *;
+@use '../styles/variables' as *;
+
+.cart-summary {
+  @include card-surface;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  padding: $space-3;
+  width: 100%;
+
+  @include desktop-up {
+    position: sticky;
+    top: calc(#{$navbar-height} + #{$space-2});
+    width: 360px;
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 1.15rem;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+
+  &__rows {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    padding-bottom: $space-2;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    gap: $space-2;
+    font-size: 0.92rem;
+
+    dt {
+      color: $color-text-secondary;
+    }
+
+    dd {
+      margin: 0;
+      font-weight: $font-weight-medium;
+      color: $color-text-primary;
+    }
+  }
+
+  &__total {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__total-label {
+    font-size: 0.85rem;
+    color: $color-text-secondary;
+  }
+
+  &__total-value {
+    font-size: 1.6rem;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+  }
+
+  &__total-unit {
+    font-size: 0.85rem;
+    font-weight: $font-weight-regular;
+    color: $color-text-secondary;
+    margin-left: 2px;
+  }
+
+  &__note {
+    font-size: 0.78rem;
+    line-height: $line-height-body;
+    color: $color-text-secondary;
+    background-color: $color-background;
+    border-radius: $radius-md;
+    padding: $space-1 $space-1;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+    margin-top: $space-1;
+  }
+
+  &__checkout {
+    @include primary-button;
+    width: 100%;
+    padding: 12px $space-3;
+    font-size: 1rem;
+  }
+
+  &__continue {
+    @include secondary-button;
+    width: 100%;
+    padding: 12px $space-3;
+    font-size: 1rem;
+  }
+}
