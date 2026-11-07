@@ -1,0 +1,12 @@
+.order-history__list { display: grid; gap: 13px; }
+.order-card { padding: 18px; border: 1px solid var(--accel-border); border-radius: 12px; background: #fff; }
+.order-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 13px; border-bottom: 1px solid var(--accel-border); }
+.order-card__number { color: var(--accel-red); font-size: 9px; font-weight: 750; letter-spacing: .8px; }
+.order-card__header h3 { margin: 5px 0 0; font-size: 14px; }
+.order-card__items { display: grid; gap: 9px; padding: 14px 0; }
+.order-card__items > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; }
+.order-card__items small, .order-card__footer > strong small { color: var(--accel-muted); font-size: 10px; font-weight: 400; }
+.order-card__items strong { font-size: 11px; white-space: nowrap; }
+.order-card__footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid var(--accel-border); color: var(--accel-muted); font-size: 11px; }
+.order-card__footer > strong { color: var(--accel-text); font-size: 16px; }
+.order-card__footer > strong small { margin-left: 3px; }
