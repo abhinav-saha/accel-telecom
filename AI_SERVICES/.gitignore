@@ -1,0 +1,16 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local secrets and runtime data
+.env
+var/
+
+# Build output and organiser-provided brief (not part of the code submission)
+dist/
+brief/
+
+# OS
+.DS_Store

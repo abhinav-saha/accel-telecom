@@ -6,8 +6,8 @@ import "./Navbar.scss";
 
 const navLinks = [
   { to: "/", label: "Home", icon: Home, exact: true },
-  { to: "/explore", label: "Explore", icon: Compass, exact: false },
-  { to: "/for-you", label: "For You", icon: Sparkles, exact: false },
+  { to: "/explore", label: "Add-on", icon: Compass, exact: false },
+  { to: "/for-you", label: "Bundle", icon: Sparkles, exact: false },
 ];
 
 function Navbar() {

@@ -1,0 +1,15 @@
+# 3-minute demo video: script and shot list
+
+**Setup before recording:** run `./run.sh`, open Chrome at `http://localhost:8000` with the window about 1366×860 (the desktop view shows the phone app plus the side panel). Delete `var/udyam.db` for a clean back-office. Optional: add a free Gemini key to `.env` so the advisor answers open questions.
+
+| Time | Screen | Say (voice-over) |
+|---|---|---|
+| 0:00-0:15 | Welcome screen | "Only 7% of Accel Business's SMB leads go live. It takes 17 days and three follow-up calls, and the quote is where most are lost. Udyam Digital lets an owner do all of it on a phone, in their language, in one sitting." |
+| 0:15-0:50 | Pick **हिंदी**, Start. Type `नागपुर में मेरा डेंटल क्लिनिक है, 10 लोग काम करते हैं`. Tap 1 site, GST yes, home broadband, pick email + security + uptime, Done, no fixed budget. | "The advisor understands Hindi and fills three answers from one sentence. It asks only what it needs. The bundle comes from a rules engine over the catalogue: city tier, size, GST and product dependencies. So it's always a product we can actually sell, explained in plain words." |
+| 0:50-1:15 | Customise & buy. Toggle backup off/on, tap 24 months, open "Add more". | "One monthly price, with GST, setup and go-live date shown upfront. No product codes. Owners switch add-ons and contract length and the price updates instantly. The old process took 3-5 days for a PDF." |
+| 1:15-1:55 | KYC: consent screen (pause on it), Agree. Business: type `27XUIXG0767D1ZP`, Fetch. Documents: choose **K07**, Fetch via DigiLocker, Verify → show the red "legal name differs" card. | "Consent comes first, as DPDP requires: what we collect, why, how long, and a one-tap withdraw. GSTIN is checked instantly with its checksum and fetched from the registry. Documents are read by OCR and cross-checked. Here the certificate was edited, and we catch it and tell the owner exactly what to fix. Across the 12 specimen files we flag all 7 planted problems: cancelled GSTIN, blur, a missing certificate, a typo, an edited name and a stale bill." |
+| 1:55-2:20 | Back to Documents, choose **K03**, Fetch, Verify → green. Fill name, mobile, OTP 123456 → order. | "A clean applicant verifies in seconds, even though another business with the same name exists in Bengaluru. E-sign, and the order is placed." |
+| 2:20-2:40 | Tracker: tap "Simulate next day" twice. | "Instead of calling support, the owner sees every step, which services are live, who is installing (a local partner who earns commission on this digital order) and gets WhatsApp updates." |
+| 2:40-3:00 | Open `/admin` (PIN 2026): Overview → Who to call → Advisor hand-offs. | "Sales and partners get the funnel, a propensity-ranked call list with the next best action, and every chat the advisor couldn't close. Digital handles the routine; people close the complex. Built entirely on free tiers, and it runs even with no AI key." |
+
+**Tips:** record at 1080p, zoom the browser to 110% for legibility, keep the mouse still while speaking, cut waiting time for "Reading document…" in editing.

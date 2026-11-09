@@ -21,12 +21,29 @@ function SavedBundles() {
   useEffect(() => { load(); }, []);
 
   async function addBundle(bundle) {
-    setBusyId(bundle._id || bundle.bundleId);
+    const id = bundle._id || bundle.bundleId;
+    setBusyId(id);
+    setError("");
+    setNotice("");
+
     try {
-      (bundle.products || []).forEach((product) => addToCart(product));
+      for (const product of bundle.products || []) {
+        const success = await addToCart({
+          ...product,
+          quantity: Number(product.quantity || 1),
+        });
+
+        if (!success) {
+          throw new Error(`Unable to add ${product.product_name} to cart.`);
+        }
+      }
+
       setNotice(`${bundle.name} added to your cart.`);
-    } catch (err) { setError(err.message || "Could not add this bundle to cart."); }
-    finally { setBusyId(""); }
+    } catch (err) {
+      setError(err.message || "Could not add this bundle to cart.");
+    } finally {
+      setBusyId("");
+    }
   }
 
   async function removeBundle(bundle) {

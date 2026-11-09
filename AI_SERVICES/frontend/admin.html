@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%234f46e5%22/%3E%3Ctext x=%2232%22 y=%2244%22 font-size=%2236%22 font-family=%22Arial%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22%3EA%3C/text%3E%3C/svg%3E">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Back-office · Udyam Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } };</script>
+  <link rel="stylesheet" href="/frontend/styles.css">
+  <style>
+    .viz { --series-1: #2a78d6; --grid: #e7e6e2; }
+    .bar { height: 22px; border-radius: 0 4px 4px 0; background: var(--series-1); min-width: 2px; }
+    .bar-track { background: #f1f5f9; border-radius: 0 4px 4px 0; }
+    th { text-align: left; font-weight: 600; color: #64748b; font-size: 12px; padding: 8px 10px; white-space: nowrap; }
+    td { padding: 8px 10px; font-size: 13px; border-top: 1px solid #f1f5f9; vertical-align: top; }
+    .tab.active { background: #fff; color: #3730a3; box-shadow: 0 1px 3px rgba(15,23,42,.12); }
+    .tip { position: relative; }
+    .tip:hover::after { content: attr(data-tip); position: absolute; left: 0; top: -30px; background: #0f172a; color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 6px; white-space: nowrap; z-index: 5; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800">
+  <div class="app-bg"></div>
+  <header class="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+      <div class="flex items-center gap-3"><div class="logo-mark small">A</div><div><div class="font-bold leading-tight text-indigo-900">Accel Business · Back-office</div><div class="text-xs text-slate-500">For sales teams & channel partners · data is synthetic</div></div></div>
+      <nav class="seg" id="tabs">
+        <button class="tab active px-3" data-tab="overview">Overview</button>
+        <button class="tab px-3" data-tab="calls">Who to call</button>
+        <button class="tab px-3" data-tab="live">Advisor hand-offs</button>
+        <button class="tab px-3" data-tab="orders">Orders</button>
+      </nav>
+      <a href="/" class="text-sm font-semibold text-indigo-700">Customer app →</a>
+    </div>
+  </header>
+  <main class="mx-auto max-w-7xl px-4 py-6" id="main">
+    <div class="card mx-auto mt-16 max-w-sm p-6 text-center" id="pin-box">
+      <div class="text-lg font-bold">🔐 Back-office sign-in</div>
+      <div class="mt-1 text-sm text-slate-500">Role-based access: partners see only their leads in production. Demo PIN: <b>2026</b></div>
+      <input id="pin" class="input mt-4 text-center tracking-[.5em]" maxlength="6" inputmode="numeric" placeholder="PIN">
+      <button class="btn-primary mt-3 w-full" id="pin-go">Sign in</button>
+    </div>
+  </main>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const inr = (n) => n == null ? '-' : '₹' + Number(n).toLocaleString('en-IN');
+  let PIN = '';
+  try { PIN = sessionStorage.getItem('ud_pin') || ''; } catch (e) {}
+  let tab = 'overview', data = {};
+
+  async function api(p) {
+    const r = await fetch(p, { headers: { 'x-admin-pin': PIN } });
+    if (r.status === 401) { PIN = ''; showPin(); throw new Error('pin'); }
+    return r.json();
+  }
+  function showPin() {
+    $('#main').innerHTML = `<div class="card mx-auto mt-16 max-w-sm p-6 text-center"><div class="text-lg font-bold">🔐 Back-office sign-in</div>
+      <div class="mt-1 text-sm text-slate-500">Demo PIN: <b>2026</b></div><input id="pin" class="input mt-4 text-center tracking-[.5em]" maxlength="6" inputmode="numeric" placeholder="PIN">
+      <button class="btn-primary mt-3 w-full" id="pin-go">Sign in</button></div>`;
+    bindPin();
+  }
+  function bindPin() {
+    const go = () => { PIN = $('#pin').value.trim(); try { sessionStorage.setItem('ud_pin', PIN); } catch (e) {} load(); };
+    $('#pin-go').onclick = go; $('#pin').onkeydown = (e) => { if (e.key === 'Enter') go(); };
+  }
+
+  const kpi = (label, value, sub, target) => `<div class="card p-4"><div class="text-xs font-semibold uppercase tracking-wide text-slate-500">${label}</div>
+    <div class="mt-1 text-2xl font-extrabold text-slate-900">${value}</div><div class="text-xs text-slate-500">${sub}</div>
+    ${target ? `<div class="mt-2 inline-flex rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold text-indigo-700">Target: ${target}</div>` : ''}</div>`;
+
+  function hbars(rows, valueKey, labelKey, fmt, extra) {
+    const max = Math.max(...rows.map((r) => r[valueKey]));
+    return `<div class="viz space-y-1.5">${rows.map((r) => `
+      <div class="grid grid-cols-[150px,1fr,auto] items-center gap-3 text-sm">
+        <div class="truncate text-slate-600" title="${esc(r[labelKey])}">${esc(r[labelKey])}</div>
+        <div class="bar-track tip" data-tip="${esc(r[labelKey])}: ${fmt(r[valueKey])}"><div class="bar" style="width:${(100 * r[valueKey] / max).toFixed(1)}%"></div></div>
+        <div class="w-24 text-right tabular-nums text-slate-800">${fmt(r[valueKey])}${extra ? extra(r) : ''}</div>
+      </div>`).join('')}</div>`;
+  }
+
+  function overview() {
+    const s = data.summary, k = s.kpis;
+    const fixTag = { 'Digital fixes it': 'st-pass', 'Partly': 'st-warn', 'Nurture': 'st-info', 'Ops': 'st-warn', 'Upsell later': 'st-info', 'Data quality': 'st-info' };
+    return `
+    <div class="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+      ${kpi('Lead → activation', k.conversion + '%', `${k.activated} of ${k.leads.toLocaleString('en-IN')} leads`, '15%')}
+      ${kpi('Days to activate', k.avg_days, 'average, lead to live', '≤ 7 days')}
+      ${kpi('Cost to acquire', inr(k.cac), 'per activated SMB', '≤ ₹8,000')}
+      ${kpi('6-month churn', k.churn_6m + '%', 'of activated customers', '≤ 10%')}
+      ${kpi('Status chase calls', k.avg_followups, 'per customer', '< 1')}
+      ${kpi('GSTIN effect', k.gstin_rate + '% vs ' + k.no_gstin_rate + '%', 'activation with vs without', null)}
+    </div>
+    <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <div class="card p-5"><div class="font-bold">Acquisition funnel (Apr-Jun 2026)</div><div class="mb-3 text-xs text-slate-500">Leads reaching each stage · % = conversion from previous stage</div>
+        ${hbars(s.funnel, 'count', 'stage', (v) => v.toLocaleString('en-IN'), (r) => r.pct_prev ? `<span class="ml-1 text-xs ${r.pct_prev < 50 ? 'font-bold text-red-600' : 'text-slate-400'}">${r.pct_prev}%</span>` : '')}
+        <div class="mt-3 rounded-xl bg-indigo-50 p-3 text-xs text-indigo-900">Steepest drop: <b>Needs assessed → Quote accepted (44%)</b>. The advisor gives an instant, plain-language quote instead of a 3-5 day PDF.</div></div>
+      <div class="card p-5"><div class="font-bold">Why leads drop and what the digital journey does</div>
+        <div class="mb-3 text-xs text-slate-500"><b>${s.digitally_fixable.pct}%</b> of drops (${s.digitally_fixable.count.toLocaleString('en-IN')}) are directly addressed by self-serve advisor, instant quote, smart KYC or tracker</div>
+        <div class="max-h-[340px] overflow-y-auto"><table class="w-full"><thead><tr><th>Reason</th><th class="text-right">Leads</th><th>Fix</th></tr></thead><tbody>
+        ${s.drop_reasons.map((d) => `<tr><td><div class="font-medium">${esc(d.reason)}</div><div class="text-xs text-slate-500">${esc(d.action)}</div></td><td class="text-right tabular-nums">${d.count}</td><td><span class="status-pill ${fixTag[d.fix] || 'st-info'}">${esc(d.fix || '-')}</span></td></tr>`).join('')}
+        </tbody></table></div></div>
+    </div>
+    <div class="card mt-4 overflow-x-auto p-5"><div class="font-bold">Segments: where to start</div><div class="mb-2 text-xs text-slate-500">Prioritise professional offices (volume × value × low churn) and multi-site (highest value); give micro retail a low-cost starter bundle sold through partners.</div>
+      <table class="w-full min-w-[720px]"><thead><tr><th>Segment</th><th class="text-right">Leads</th><th class="text-right">Activation</th><th class="text-right">Median bundle / mo</th><th class="text-right">6-mo churn</th><th class="text-right">NPS</th><th class="text-right">Days</th><th class="text-right">CAC / activation</th></tr></thead><tbody>
+      ${s.segments.map((g) => `<tr><td class="font-medium">${esc(g.segment)}</td><td class="text-right tabular-nums">${g.leads.toLocaleString('en-IN')}</td><td class="text-right tabular-nums">${g.activation_rate}%</td><td class="text-right tabular-nums">${inr(g.median_bundle)}</td><td class="text-right tabular-nums">${g.churn_6m}%</td><td class="text-right tabular-nums">${g.avg_nps}</td><td class="text-right tabular-nums">${g.avg_days}</td><td class="text-right tabular-nums">${inr(g.cac_per_activation)}</td></tr>`).join('')}
+      </tbody></table></div>
+    <div class="mt-4 grid gap-4 lg:grid-cols-2">
+      <div class="card p-5"><div class="font-bold">Activation rate by lead source</div><div class="mb-3 text-xs text-slate-500">% of leads from each source that activated</div>
+        ${hbars(s.sources, 'rate', 'source', (v) => v + '%', (r) => `<span class="ml-1 text-xs text-slate-400">${inr(r.cac)}</span>`)}
+        <div class="mt-2 text-[11px] text-slate-400">Grey figure = acquisition cost per activation</div></div>
+      <div class="card p-5"><div class="font-bold">Preferred language of leads</div><div class="mb-3 text-xs text-slate-500">Why the advisor speaks 10 languages: 77% of leads prefer a language other than English</div>
+        ${hbars(s.languages, 'count', 'language', (v) => v.toLocaleString('en-IN'))}</div>
+    </div>`;
+  }
+
+  function calls() {
+    const m = data.summary.model;
+    return `<div class="card p-5"><div class="flex flex-wrap items-end justify-between gap-3"><div><div class="font-bold">Dropped leads worth a call, ranked by propensity</div>
+      <div class="text-xs text-slate-500">Logistic regression on lead-time features only (segment, size, GSTIN/Udyam, source, language, current setup) · hold-out AUC <b>${m.auc}</b> · score = percentile among all 5,000 leads (99 = top 1%)</div></div>
+      <select id="seg" class="input w-auto py-2 text-sm"><option value="">All segments</option><option value="micro">Micro retail</option><option value="prof">Professional offices</option><option value="multi">Multi-site</option><option value="mfg">Manufacturers</option></select></div>
+      <div class="mt-3 flex flex-wrap gap-1.5 text-[11px]">${m.top_features.slice(0, 6).map((f) => `<span class="rounded-full ${f.weight > 0 ? 'bg-emerald-50 text-emerald-800' : 'bg-red-50 text-red-800'} px-2 py-0.5">${f.weight > 0 ? '▲' : '▼'} ${esc(f.feature)}</span>`).join('')}</div>
+      <div class="mt-4 overflow-x-auto"><table class="w-full min-w-[900px]"><thead><tr><th>#</th><th>Score</th><th>Business</th><th>City · language</th><th>Dropped at</th><th>Reason</th><th>Next best action</th><th>Route to</th></tr></thead><tbody>
+      ${data.calls.map((c) => `<tr><td class="tabular-nums text-slate-400">${c.rank}</td><td><div class="flex items-center gap-2"><div class="h-1.5 w-14 rounded-full bg-slate-100"><div class="h-full rounded-full" style="width:${c.score}%;background:var(--series-1)"></div></div><b class="tabular-nums">${c.score}</b></div></td>
+        <td><div class="font-medium">${esc(c.business)}</div><div class="text-xs text-slate-500">${esc(c.type)} · ${c.has_gstin ? 'GSTIN ✓' : 'no GSTIN'}</div></td><td>${esc(c.city)}<div class="text-xs text-slate-500">${esc(c.language)}</div></td>
+        <td>${esc(c.stage)}</td><td class="text-xs">${esc(c.drop_reason)}</td><td class="text-xs">${esc(c.next_action)}</td><td><span class="status-pill st-info">${esc(c.route)}</span></td></tr>`).join('')}
+      </tbody></table></div></div>`;
+  }
+
+  function live() {
+    const L = data.live.leads;
+    return `<div class="card p-5"><div class="font-bold">Leads the advisor could not close</div>
+      <div class="text-xs text-slate-500">Live sessions that stopped before ordering, or asked for a human. Each one is routed to field sales or a local partner, so the digital journey feeds the channel instead of competing with it.</div>
+      ${L.length ? `<div class="mt-4 overflow-x-auto"><table class="w-full min-w-[820px]"><thead><tr><th>Score</th><th>Business</th><th>Segment · city</th><th>Where it stopped</th><th>Quote / mo</th><th>Callback</th><th>Route to</th></tr></thead><tbody>
+      ${L.map((l) => `<tr><td class="tabular-nums font-bold">${l.score}</td><td class="font-medium">${esc(l.business)}<div class="text-xs text-slate-400">lang: ${esc(l.language)}</div></td><td>${esc(l.segment)}<div class="text-xs text-slate-500">${esc(l.city)}</div></td>
+        <td class="text-xs">${esc(l.reason)}</td><td class="tabular-nums">${inr(l.monthly)}</td><td class="text-xs">${l.callback ? `📞 ${esc(l.callback.name)} · ${esc(l.callback.phone_masked)}<br>${esc(l.callback.slot)}` : '-'}</td><td><span class="status-pill st-info">${esc(l.route)}</span></td></tr>`).join('')}
+      </tbody></table></div>` : '<div class="mt-6 rounded-xl bg-slate-50 p-6 text-center text-sm text-slate-500">No hand-offs yet. Start a chat in the customer app and leave midway to see it here.</div>'}</div>`;
+  }
+
+  function orders() {
+    const O = data.live.orders;
+    return `<div class="card p-5"><div class="font-bold">Orders placed through the digital journey</div><div class="text-xs text-slate-500">Installer assignment and SLA tracking. Phone numbers are masked.</div>
+      ${O.length ? `<div class="mt-4 overflow-x-auto"><table class="w-full min-w-[820px]"><thead><tr><th>Order</th><th>Business</th><th>Monthly</th><th>Status</th><th>Installer</th><th>Contact</th><th></th></tr></thead><tbody>
+      ${O.map((o) => `<tr><td class="font-mono text-xs">${esc(o.id)}</td><td class="font-medium">${esc(o.business_name)}<div class="text-xs text-slate-500">${esc(o.city)}</div></td><td class="tabular-nums">${inr(o.monthly)}</td>
+        <td><div class="flex items-center gap-2"><div class="h-1.5 w-16 rounded-full bg-slate-100"><div class="h-full rounded-full bg-indigo-600" style="width:${o.progress}%"></div></div><span class="text-xs">${o.current ? esc(o.current.title) : 'Live ✓'}</span></div></td>
+        <td class="text-xs">${esc(o.partner.name)}</td><td class="text-xs">${esc(o.phone_masked)}</td><td><button class="btn-ghost px-2 py-1 text-xs" data-adv="${esc(o.id)}">+1 day</button></td></tr>`).join('')}
+      </tbody></table></div>` : '<div class="mt-6 rounded-xl bg-slate-50 p-6 text-center text-sm text-slate-500">No orders yet.</div>'}</div>`;
+  }
+
+  async function load() {
+    try {
+      data.summary = await api('/api/admin/summary');
+      data.calls = await api('/api/admin/calllist?limit=60&segment=' + (data.seg || ''));
+      data.live = await api('/api/admin/live');
+      draw();
+    } catch (e) { /* pin prompt shown */ }
+  }
+  function draw() {
+    document.querySelectorAll('.tab').forEach((b) => b.classList.toggle('active', b.dataset.tab === tab));
+    $('#main').innerHTML = `<div class="fade-in">${{ overview, calls, live, orders }[tab]()}</div>`;
+    const seg = $('#seg'); if (seg) { seg.value = data.seg || ''; seg.onchange = async () => { data.seg = seg.value; data.calls = await api('/api/admin/calllist?limit=60&segment=' + data.seg); draw(); }; }
+    document.querySelectorAll('[data-adv]').forEach((b) => b.onclick = async () => { await fetch(`/api/orders/${b.dataset.adv}/advance?days=1`, { method: 'POST' }); data.live = await api('/api/admin/live'); draw(); });
+  }
+  document.querySelectorAll('.tab').forEach((b) => b.onclick = async () => { tab = b.dataset.tab; if (data.summary) { if (tab !== 'overview') data.live = await api('/api/admin/live'); draw(); } });
+  bindPin();
+  if (PIN) load();
+})();
+</script>
+</body>
+</html>

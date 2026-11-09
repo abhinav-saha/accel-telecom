@@ -28,6 +28,5 @@ router.post("/kyc/:type", (req, res, next) => {
   });
 }, controller.uploadKycDocument);
 router.get("/kyc/:documentId/file", controller.getKycFile);
-router.patch("/kyc/:documentId/review", controller.reviewKycDocument);
 
 module.exports = router;

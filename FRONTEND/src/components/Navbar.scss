@@ -194,11 +194,10 @@
     display: none;
   }
 
-  @media (max-width: calc($bp-tablet - 1px)) {
-  &__brand-name {
-    display: none;
-  }
-}
+   @media (max-width: calc($bp-tablet - 1px)) {
+    &__brand-name {
+      display: none;
+    }
 
     &__tab-label {
       display: none;
@@ -213,4 +212,5 @@
       }
     }
   }
+}
 

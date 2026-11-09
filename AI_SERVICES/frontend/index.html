@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%234f46e5%22/%3E%3Ctext x=%2232%22 y=%2244%22 font-size=%2236%22 font-family=%22Arial%22 font-weight=%22bold%22 fill=%22white%22 text-anchor=%22middle%22%3EA%3C/text%3E%3C/svg%3E">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3730a3">
+  <title>Udyam Digital · Accel Business</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'Noto Sans Devanagari', 'system-ui', 'sans-serif'] },
+          colors: {
+            brand: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81', 950: '#1e1b4b' },
+            sun: { 400: '#fbbf24', 500: '#f59e0b' },
+          },
+          boxShadow: { card: '0 1px 2px rgba(15,23,42,.06), 0 8px 24px -12px rgba(15,23,42,.18)' },
+        },
+      },
+    };
+  </script>
+  <link rel="stylesheet" href="/frontend/styles.css">
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased">
+  <div class="app-bg"></div>
+  <div class="relative mx-auto flex min-h-screen max-w-6xl gap-8 px-0 lg:px-6 lg:py-6">
+
+    <!-- Desktop side panel (hidden on phones) -->
+    <aside class="hidden lg:flex w-[360px] shrink-0 flex-col justify-between gap-8 rounded-3xl bg-brand-950 p-8 text-white shadow-card">
+      <div>
+        <div class="flex items-center gap-3">
+          <div class="logo-mark">A</div>
+          <div>
+            <div class="text-lg font-bold leading-tight">Accel Business</div>
+            <div class="text-xs text-brand-200">Project Udyam Digital</div>
+          </div>
+        </div>
+        <h1 class="mt-10 text-3xl font-extrabold leading-tight">Go digital in <span class="text-sun-400">one sitting</span>.</h1>
+        <p class="mt-3 text-sm text-brand-200">Find the right bundle, see one clear monthly price, finish KYC on your phone and track installation, without waiting for a sales visit.</p>
+        <ol class="mt-8 space-y-4 text-sm" id="side-steps"></ol>
+      </div>
+      <div class="space-y-3 text-xs text-brand-200">
+        <div class="flex items-center gap-2"><span class="dot bg-emerald-400"></span><span id="ai-status">Loading…</span></div>
+        <div>🔒 DPDP Act 2023 consent · identifiers masked · documents never stored</div>
+        <a href="/admin" class="inline-block rounded-lg border border-white/20 px-3 py-1.5 text-white hover:bg-white/10">Back-office for sales & partners →</a>
+      </div>
+    </aside>
+
+    <!-- Phone app -->
+    <main class="relative flex min-h-screen w-full flex-col bg-white lg:min-h-0 lg:max-w-[460px] lg:rounded-3xl lg:shadow-card lg:overflow-hidden" id="app-main">
+      <header class="sticky top-0 z-20 border-b border-slate-100 bg-white/90 backdrop-blur">
+        <div class="flex items-center justify-between px-4 py-3">
+          <button class="flex items-center gap-2" data-nav="welcome" aria-label="Home">
+            <div class="logo-mark small">A</div>
+            <div class="text-left">
+              <div class="text-sm font-bold leading-tight text-brand-900">Accel Business</div>
+              <div class="text-[11px] leading-tight text-slate-500" data-t="tagline">Udyam Digital</div>
+            </div>
+          </button>
+          <div class="flex items-center gap-1.5">
+            <button id="tts-btn" class="icon-btn" title="Read replies aloud" aria-label="Read replies aloud">🔈</button>
+            <select id="lang-select" class="rounded-lg border border-slate-200 bg-white px-2 py-1.5 text-xs font-medium" aria-label="Language"></select>
+            <button class="icon-btn" data-action="callback" title="Talk to an expert" aria-label="Talk to an expert">☎️</button>
+          </div>
+        </div>
+        <nav id="stepper" class="hidden px-4 pb-3"></nav>
+        <div id="chat-progress-wrap" class="hidden px-4 pb-2" aria-hidden="true">
+          <div class="h-1 overflow-hidden rounded-full bg-slate-100"><div id="chat-progress" class="h-full rounded-full bg-sun-400 transition-all" style="width:0%"></div></div>
+        </div>
+      </header>
+
+      <section id="view" class="flex flex-1 flex-col"></section>
+    </main>
+  </div>
+
+  <!-- Modal root -->
+  <div id="modal" class="fixed inset-0 z-50 hidden items-end justify-center bg-slate-900/50 p-0 sm:items-center sm:p-6">
+    <div class="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-white p-6 shadow-2xl sm:rounded-3xl" id="modal-body"></div>
+  </div>
+  <div id="toast" class="pointer-events-none fixed bottom-6 left-1/2 z-50 hidden -translate-x-1/2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm text-white shadow-lg"></div>
+
+  <script src="/frontend/app.js"></script>
+</body>
+</html>

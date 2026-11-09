@@ -101,3 +101,18 @@
     font-size: 1rem;
   }
 }
+
+.cart-summary {
+  &__address {
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    padding: $space-2;
+    display: grid;
+    gap: 8px;
+  }
+  &__address-heading { display: flex; align-items: center; gap: 7px; color: $color-text-primary; font-size: .9rem; }
+  &__address-heading svg { color: $color-primary-red; }
+  &__address p { margin: 0; color: $color-text-secondary; font-size: .85rem; line-height: 1.5; overflow-wrap: anywhere; }
+  &__address-edit { display: inline-flex; align-items: center; gap: 6px; width: fit-content; color: $color-primary-red; font-size: .82rem; font-weight: 700; text-decoration: none; }
+  &__address-edit:hover { text-decoration: underline; }
+}

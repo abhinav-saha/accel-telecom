@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 940" width="1600" height="940" font-family="Inter, Arial, sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#475569"/></marker>
+    <marker id="ap" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4f46e5"/></marker>
+    <style>
+      .col{font-size:13px;font-weight:700;fill:#64748b;letter-spacing:.08em}
+      .h{font-size:16px;font-weight:700;fill:#0f172a}
+      .s{font-size:12.5px;fill:#475569}
+      .n{font-size:12px;font-weight:700;fill:#fff}
+      .box{fill:#fff;stroke:#cbd5e1;stroke-width:1.5}
+      .core{fill:#eef2ff;stroke:#818cf8;stroke-width:1.5}
+      .ext{fill:#f8fafc;stroke:#94a3b8;stroke-width:1.5;stroke-dasharray:5 4}
+      .data{fill:#fffbeb;stroke:#f59e0b;stroke-width:1.5}
+      .ln{stroke:#475569;stroke-width:1.6;fill:none}
+      .lp{stroke:#4f46e5;stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect width="1600" height="940" fill="#ffffff"/>
+  <text x="40" y="44" font-size="26" font-weight="800" fill="#1e1b4b">Udyam Digital: solution architecture</text>
+  <text x="40" y="70" class="s" font-size="14">Digital-first SMB acquisition &amp; onboarding for Accel Business · every component runs on free tiers · numbered arrows = the customer journey</text>
+
+  <!-- column headers -->
+  <text x="40" y="112" class="col">USERS &amp; CHANNELS</text>
+  <text x="330" y="112" class="col">FRONT END (mobile-first PWA)</text>
+  <text x="660" y="112" class="col">API LAYER</text>
+  <text x="920" y="112" class="col">DOMAIN SERVICES (Python)</text>
+  <text x="1290" y="112" class="col">DATA &amp; EXTERNAL SERVICES</text>
+
+  <!-- users -->
+  <rect x="40" y="130" width="250" height="120" rx="14" class="box"/>
+  <text x="58" y="160" class="h">📱 Business owner</text>
+  <text x="58" y="184" class="s">Phone browser, 10 Indian languages</text>
+  <text x="58" y="202" class="s">Type, tap chips or speak (Web Speech)</text>
+  <text x="58" y="220" class="s">Replies read aloud in own language</text>
+  <rect x="40" y="270" width="250" height="90" rx="14" class="box"/>
+  <text x="58" y="300" class="h">💬 WhatsApp / SMS</text>
+  <text x="58" y="322" class="s">Share quote, order updates,</text>
+  <text x="58" y="340" class="s">re-engage dropped leads</text>
+  <rect x="40" y="380" width="250" height="110" rx="14" class="box"/>
+  <text x="58" y="410" class="h">🧑‍💼 Field sales &amp; partners</text>
+  <text x="58" y="432" class="s">Get hand-offs + ranked call list,</text>
+  <text x="58" y="450" class="s">install and earn commission</text>
+  <text x="58" y="468" class="s">(PIN / role-based access)</text>
+
+  <!-- frontend -->
+  <rect x="330" y="130" width="290" height="300" rx="14" class="core"/>
+  <text x="348" y="160" class="h">Customer app (HTML + JS)</text>
+  <g class="s">
+    <text x="348" y="190">① Advisor chat · chips · voice</text>
+    <text x="348" y="214">② Quote &amp; checkout: one monthly</text>
+    <text x="364" y="232">price, toggles, 12/24/36 months</text>
+    <text x="348" y="256">③ Consent screen (DPDP 2023)</text>
+    <text x="348" y="280">④ Smart KYC: GSTIN/Udyam fetch,</text>
+    <text x="364" y="298">camera upload, DigiLocker (sim.)</text>
+    <text x="348" y="322">⑤ Review + Aadhaar OTP e-sign (sim.)</text>
+    <text x="348" y="346">⑥ Order tracker (no support calls)</text>
+    <text x="348" y="376">☎ Talk-to-expert hand-off anytime</text>
+    <text x="348" y="404" fill="#64748b">Tailwind CDN · no build step</text>
+  </g>
+  <rect x="330" y="450" width="290" height="120" rx="14" class="core"/>
+  <text x="348" y="480" class="h">Back-office dashboard</text>
+  <g class="s"><text x="348" y="504">Funnel, segments, drop reasons → fix</text><text x="348" y="524">Propensity-ranked call list</text><text x="348" y="544">Advisor hand-offs · orders · SLA</text></g>
+
+  <!-- API -->
+  <rect x="660" y="130" width="220" height="440" rx="14" class="box"/>
+  <text x="678" y="160" class="h">FastAPI gateway</text>
+  <g class="s">
+    <text x="678" y="190">/api/chat/start · message</text>
+    <text x="678" y="210">/api/quote · /connectivity</text>
+    <text x="678" y="230">/api/registry/gstin · udyam</text>
+    <text x="678" y="250">/api/kyc/consent · extract</text>
+    <text x="678" y="270">/api/kyc/verify · esign</text>
+    <text x="678" y="290">/api/orders · /track</text>
+    <text x="678" y="310">/api/callback</text>
+    <text x="678" y="330">/api/admin/* (PIN)</text>
+  </g>
+  <rect x="676" y="352" width="188" height="200" rx="10" fill="#f0fdf4" stroke="#86efac"/>
+  <text x="690" y="376" font-size="13" font-weight="700" fill="#166534">🔒 Privacy guards</text>
+  <g font-size="12" fill="#166534">
+    <text x="690" y="398">Consent required before KYC</text>
+    <text x="690" y="418">IDs only in POST bodies,</text>
+    <text x="690" y="434">never in URLs / logs</text>
+    <text x="690" y="454">Masked GSTIN / ID / phone</text>
+    <text x="690" y="474">Images in memory only</text>
+    <text x="690" y="494">Raw fields erased after verify</text>
+    <text x="690" y="514">Audit log of consent events</text>
+    <text x="690" y="534">Withdraw = erase</text>
+  </g>
+
+  <!-- services -->
+  <rect x="920" y="130" width="330" height="120" rx="14" class="core"/>
+  <text x="938" y="158" class="h">Advisor engine</text>
+  <g class="s"><text x="938" y="180">Slot-filling dialogue (8 questions)</text><text x="938" y="198">Rule NLU: Hindi/Hinglish keywords, numbers,</text><text x="938" y="216">cities · GSTIN → auto-fill from registry</text><text x="938" y="234">LLM NLU + plain-language "why" (optional)</text></g>
+  <rect x="920" y="262" width="330" height="96" rx="14" class="core"/>
+  <text x="938" y="290" class="h">Bundle rules engine (deterministic)</text>
+  <g class="s"><text x="938" y="312">City tier · min employees/sites · GSTIN · deps</text><text x="938" y="330">Segment defaults · budget trim · term pricing</text><text x="938" y="348">LLM never picks products: always catalogue-valid</text></g>
+  <rect x="920" y="370" width="330" height="110" rx="14" class="core"/>
+  <text x="938" y="398" class="h">Smart KYC</text>
+  <g class="s"><text x="938" y="420">Blur check → deskew → watermark removal → OCR</text><text x="938" y="438">GSTIN checksum repair · Udyam pattern</text><text x="938" y="456">20+ checks: status, name, address, signatory,</text><text x="938" y="474">bill age &lt; 90 days, same-name traps</text></g>
+  <rect x="920" y="492" width="160" height="78" rx="14" class="core"/>
+  <text x="936" y="520" class="h">Orders &amp; tracker</text>
+  <g class="s"><text x="936" y="540">ETAs from install days</text><text x="936" y="558">Partner assignment</text></g>
+  <rect x="1090" y="492" width="160" height="78" rx="14" class="core"/>
+  <text x="1106" y="520" class="h">Analytics</text>
+  <g class="s"><text x="1106" y="540">Logistic regression</text><text x="1106" y="558">AUC 0.75 · playbook</text></g>
+
+  <!-- data & external -->
+  <rect x="1290" y="130" width="270" height="88" rx="14" class="ext"/>
+  <text x="1308" y="158" class="h">✨ Free LLM (optional)</text>
+  <g class="s"><text x="1308" y="180">Gemini 3.5 Flash-Lite: chat (vision opt-in)</text><text x="1308" y="198">or Groq Llama · falls back to rules</text></g>
+  <rect x="1290" y="232" width="270" height="70" rx="14" class="data"/>
+  <text x="1308" y="258" class="h">Mock GSTIN &amp; Udyam APIs</text>
+  <text x="1308" y="280" class="s">3,534 + 2,723 records (CSV)</text>
+  <rect x="1290" y="316" width="270" height="70" rx="14" class="data"/>
+  <text x="1308" y="342" class="h">Product catalogue</text>
+  <text x="1308" y="364" class="s">25 products · rules · prices · install days</text>
+  <rect x="1290" y="400" width="270" height="70" rx="14" class="data"/>
+  <text x="1308" y="426" class="h">SMB leads (5,000)</text>
+  <text x="1308" y="448" class="s">Trains propensity model · KPIs</text>
+  <rect x="1290" y="484" width="270" height="86" rx="14" class="data"/>
+  <text x="1308" y="510" class="h">SQLite store</text>
+  <text x="1308" y="532" class="s">Sessions · masked KYC results ·</text>
+  <text x="1308" y="550" class="s">orders · consent audit log</text>
+  <rect x="1290" y="584" width="270" height="70" rx="14" class="ext"/>
+  <text x="1308" y="610" class="h">DigiLocker · e-sign · UPI</text>
+  <text x="1308" y="632" class="s">Simulated in prototype; real APIs in pilot</text>
+
+  <!-- arrows: users -> frontend -->
+  <path d="M290 190 H330" class="lp" marker-end="url(#ap)"/>
+  <path d="M330 300 C 305 300, 310 315, 290 315" class="ln" marker-end="url(#a)"/>
+  <path d="M290 435 C 310 435, 310 510, 330 510" class="ln" marker-start="url(#a)" marker-end="url(#a)"/>
+  <!-- frontend -> api -->
+  <path d="M620 260 H660" class="lp" marker-end="url(#ap)" marker-start="url(#ap)"/>
+  <path d="M620 510 H660" class="ln" marker-end="url(#a)" marker-start="url(#a)"/>
+  <!-- api -> services -->
+  <path d="M880 190 H920" class="lp" marker-end="url(#ap)"/>
+  <path d="M880 310 H920" class="lp" marker-end="url(#ap)"/>
+  <path d="M880 425 H920" class="lp" marker-end="url(#ap)"/>
+  <path d="M880 531 H920" class="ln" marker-end="url(#a)"/>
+  <!-- advisor -> rules -->
+  <path d="M1085 250 V262" class="lp" marker-end="url(#ap)"/>
+  <!-- services -> data -->
+  <path d="M1250 172 H1290" class="ln" marker-end="url(#a)"/>
+  <path d="M1250 210 C 1270 210, 1270 267, 1290 267" class="ln" marker-end="url(#a)"/>
+  <path d="M1250 310 C 1270 310, 1270 351, 1290 351" class="ln" marker-end="url(#a)"/>
+  <path d="M1250 420 C 1270 420, 1270 280, 1290 280" class="ln" marker-end="url(#a)"/>
+  <path d="M1250 450 C 1275 450, 1275 180, 1290 180" class="ln" stroke-dasharray="4 4" marker-end="url(#a)"/>
+  <path d="M1250 545 C 1270 545, 1270 435, 1290 435" class="ln" marker-end="url(#a)"/>
+  <path d="M1250 560 H1290" class="ln" marker-end="url(#a)"/>
+  <path d="M1080 531 C 1100 600, 1270 610, 1290 615" class="ln" stroke-dasharray="4 4" marker-end="url(#a)"/>
+
+  <!-- journey strip -->
+  <rect x="40" y="690" width="1520" height="210" rx="18" fill="#1e1b4b"/>
+  <text x="68" y="726" font-size="16" font-weight="800" fill="#fbbf24">Customer journey &amp; data flow (target: lead → live in ≤ 7 days, zero visits for standard bundles)</text>
+  <g font-size="13" fill="#e0e7ff">
+    <circle cx="80" cy="770" r="14" fill="#4f46e5"/><text x="80" y="775" class="n" text-anchor="middle">1</text>
+    <text x="104" y="766" font-weight="700" fill="#fff">Discover</text><text x="104" y="786">8 questions, any language;</text><text x="104" y="804">GSTIN → profile auto-filled</text>
+    <circle cx="340" cy="770" r="14" fill="#4f46e5"/><text x="340" y="775" class="n" text-anchor="middle">2</text>
+    <text x="364" y="766" font-weight="700" fill="#fff">Recommend</text><text x="364" y="786">Rules engine builds a valid</text><text x="364" y="804">bundle; LLM explains why</text>
+    <circle cx="600" cy="770" r="14" fill="#4f46e5"/><text x="600" y="775" class="n" text-anchor="middle">3</text>
+    <text x="624" y="766" font-weight="700" fill="#fff">Quote</text><text x="624" y="786">One monthly price; toggles,</text><text x="624" y="804">term, connectivity re-priced live</text>
+    <circle cx="860" cy="770" r="14" fill="#4f46e5"/><text x="860" y="775" class="n" text-anchor="middle">4</text>
+    <text x="884" y="766" font-weight="700" fill="#fff">Consent + KYC</text><text x="884" y="786">Registry lookup + OCR +</text><text x="884" y="804">20+ checks with fix-it advice</text>
+    <circle cx="1120" cy="770" r="14" fill="#4f46e5"/><text x="1120" y="775" class="n" text-anchor="middle">5</text>
+    <text x="1144" y="766" font-weight="700" fill="#fff">E-sign &amp; order</text><text x="1144" y="786">Partner/engineer assigned,</text><text x="1144" y="804">ETAs from install days</text>
+    <circle cx="1380" cy="770" r="14" fill="#4f46e5"/><text x="1380" y="775" class="n" text-anchor="middle">6</text>
+    <text x="1404" y="766" font-weight="700" fill="#fff">Track</text><text x="1404" y="786">Live timeline + WhatsApp</text><text x="1404" y="804">updates, one support no.</text>
+  </g>
+  <text x="68" y="852" font-size="13" fill="#c7d2fe">Not closed digitally? Session + quote + KYC status go to the back-office with a propensity score and are routed: micro → local partner, professional → inside sales + partner, multi-site/factory → field key-account team.</text>
+  <text x="68" y="876" font-size="13" fill="#c7d2fe">Tech: Python 3.9 · FastAPI · scikit-learn · RapidOCR (ONNX) · OpenCV · SQLite · vanilla JS + Tailwind · Gemini/Groq free tier · Web Speech API. Runs on a laptop or any free host.</text>
+</svg>

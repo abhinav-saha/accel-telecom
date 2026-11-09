@@ -1,4 +1,6 @@
+
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Sparkles,
@@ -23,9 +25,13 @@ import {
   getFeaturedProducts,
 } from "../data/productCatalogue";
 import { mockUser, getGreeting } from "../data/mockUser";
+import { profileApi } from "../services/profile.api";
 import "./Home.scss";
 
 const featuredProductIds = ["P01", "P15", "P16", "P19"];
+
+// Calculated once when the website loads.
+const pageLoadGreeting = getGreeting();
 
 const benefits = [
   {
@@ -55,10 +61,54 @@ const benefits = [
 ];
 
 function Home() {
-  const greeting = getGreeting();
+  const greeting = pageLoadGreeting;
+
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+
+    const loadProfile = async () => {
+      try {
+        const result = await profileApi.getProfile();
+
+        if (active) {
+          setProfile(result?.profile || {});
+        }
+      } catch (error) {
+        console.error("Unable to load profile:", error);
+
+        if (active) {
+          setProfile({});
+        }
+      }
+    };
+
+    loadProfile();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const firstName =
+    profile?.fullName?.trim()?.split(/\s+/)[0] ||
+    profile?.username?.trim()?.split(/\s+/)[0] ||
+    "there";
+
+  const businessName =
+    profile?.businessName || "Add business details in Profile";
+
+  const businessCategory =
+    profile?.category || "Add business category in Profile";
+
+  const location =
+    profile?.location || "Add location in Profile";
+
   const featuredProducts = getFeaturedProducts(["micro", "prof"]).filter(
     (product) => featuredProductIds.includes(product.product_id),
   );
+
   const categoriesWithDescriptions = categories.map((category) => ({
     ...category,
     description: categoryDescriptions[category.name] ?? "",
@@ -89,6 +139,7 @@ function Home() {
               </Link>
             </div>
           </div>
+
           <div className="hero__visual" aria-hidden="true">
             <div className="hero__visual-card hero__visual-card--1">
               <Compass size={22} />
@@ -116,38 +167,40 @@ function Home() {
         <div className="overview__inner">
           <div className="overview__greeting">
             <h2 className="overview__title" id="overview-heading">
-              {greeting}, {mockUser.firstName}
+              {greeting}, {firstName}
             </h2>
             <p className="overview__subtitle">
-              Let&apos;s get your business connected.
+              Let's get your business connected.
             </p>
           </div>
+
           <ul className="overview__stats">
             <li className="overview__stat">
               <span className="overview__stat-icon" aria-hidden="true">
                 <Building2 size={20} />
               </span>
               <span className="overview__stat-label">Business</span>
-              <span className="overview__stat-value">
-                {mockUser.businessName}
-              </span>
+              <span className="overview__stat-value">{businessName}</span>
             </li>
+
             <li className="overview__stat">
               <span className="overview__stat-icon" aria-hidden="true">
                 <Tag size={20} />
               </span>
               <span className="overview__stat-label">Category</span>
               <span className="overview__stat-value">
-                {mockUser.businessCategory}
+                {businessCategory}
               </span>
             </li>
+
             <li className="overview__stat">
               <span className="overview__stat-icon" aria-hidden="true">
                 <MapPin size={20} />
               </span>
               <span className="overview__stat-label">Location</span>
-              <span className="overview__stat-value">{mockUser.location}</span>
+              <span className="overview__stat-value">{location}</span>
             </li>
+
             <li className="overview__stat">
               <span className="overview__stat-icon" aria-hidden="true">
                 <Package size={20} />

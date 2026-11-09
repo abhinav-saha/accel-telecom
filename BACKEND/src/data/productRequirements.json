@@ -1,0 +1,193 @@
+[
+  {
+    "productId": "P01",
+    "productName": "Biz Fibre 100",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P02",
+    "productName": "Biz Fibre 300",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P03",
+    "productName": "Biz Fibre 1G",
+    "requiresGstin": true,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P04",
+    "productName": "Biz 5G AirFiber 100",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P05",
+    "productName": "Internet Leased Line 20",
+    "requiresGstin": true,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P06",
+    "productName": "Internet Leased Line 100",
+    "requiresGstin": true,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P07",
+    "productName": "Business Postpaid 299",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P08",
+    "productName": "Business Postpaid 599",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P09",
+    "productName": "Backup 4G/5G Failover",
+    "requiresGstin": false,
+    "requiresOneOf": [
+      "P01",
+      "P02",
+      "P03",
+      "P05",
+      "P06"
+    ]
+  },
+  {
+    "productId": "P10",
+    "productName": "Managed SD-WAN",
+    "requiresGstin": true,
+    "requiresOneOf": [
+      "P01",
+      "P02",
+      "P03",
+      "P05",
+      "P06"
+    ]
+  },
+  {
+    "productId": "P11",
+    "productName": "Static IP",
+    "requiresGstin": false,
+    "requiresOneOf": [
+      "P01",
+      "P02",
+      "P03"
+    ]
+  },
+  {
+    "productId": "P12",
+    "productName": "Cloud Telephony / SIP",
+    "requiresGstin": true,
+    "requiresOneOf": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06"
+    ]
+  },
+  {
+    "productId": "P13",
+    "productName": "Toll-free Number",
+    "requiresGstin": true,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P14",
+    "productName": "Business SMS 10k",
+    "requiresGstin": true,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P15",
+    "productName": "WhatsApp Business API Starter",
+    "requiresGstin": true,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P16",
+    "productName": "Cloud Email & Office Suite",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P17",
+    "productName": "Cloud Backup 1 TB",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P18",
+    "productName": "Website + Domain Starter",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P19",
+    "productName": "Cloud POS & Billing",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P20",
+    "productName": "Endpoint Security",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P21",
+    "productName": "Managed Firewall",
+    "requiresGstin": true,
+    "requiresOneOf": [
+      "P01",
+      "P02",
+      "P03",
+      "P05",
+      "P06"
+    ]
+  },
+  {
+    "productId": "P22",
+    "productName": "Secure Wi-Fi with Guest Network",
+    "requiresGstin": false,
+    "requiresOneOf": [
+      "P01",
+      "P02",
+      "P03",
+      "P04"
+    ]
+  },
+  {
+    "productId": "P23",
+    "productName": "Cloud CCTV",
+    "requiresGstin": false,
+    "requiresOneOf": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06"
+    ]
+  },
+  {
+    "productId": "P24",
+    "productName": "Machine Monitoring IoT",
+    "requiresGstin": true,
+    "requiresOneOf": []
+  },
+  {
+    "productId": "P25",
+    "productName": "Fleet Tracker",
+    "requiresGstin": false,
+    "requiresOneOf": []
+  }
+]

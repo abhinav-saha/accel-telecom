@@ -19,6 +19,8 @@ const getCart = async (req, res) => {
 };
 
 // POST add product
+
+// POST add product
 const addToCart = async (req, res) => {
     try {
         const { cartId } = req.params;
@@ -31,13 +33,17 @@ const addToCart = async (req, res) => {
             price_max_inr_per_month
         } = product;
 
+        const quantity = product.quantity ?? 1;
+
         if (
             !product_id ||
             !product_name ||
             !Number.isFinite(price_min_inr_per_month) ||
             !Number.isFinite(price_max_inr_per_month) ||
             price_min_inr_per_month < 0 ||
-            price_max_inr_per_month < price_min_inr_per_month
+            price_max_inr_per_month < price_min_inr_per_month ||
+            !Number.isInteger(quantity) ||
+            quantity < 1
         ) {
             return res.status(400).json({
                 message: "Invalid product details"
@@ -55,7 +61,7 @@ const addToCart = async (req, res) => {
         );
 
         if (existingItem) {
-            existingItem.quantity += 1;
+            existingItem.quantity += quantity;
         } else {
             cart.items.push({
                 product_id,
@@ -65,7 +71,7 @@ const addToCart = async (req, res) => {
                 unit: product.unit,
                 price_min_inr_per_month,
                 price_max_inr_per_month,
-                quantity: 1
+                quantity
             });
         }
 
@@ -76,7 +82,10 @@ const addToCart = async (req, res) => {
             cart
         });
     } catch (error) {
-        res.status(500).json({ message: "Unable to add product" });
+        console.error("Add to cart error:", error);
+        res.status(500).json({
+            message: "Unable to add product"
+        });
     }
 };
 
